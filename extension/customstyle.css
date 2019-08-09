@@ -100,3 +100,33 @@
 .mxlikebutton:hover {
     background: linear-gradient(#ffffff, #ffdd99);
 }
+
+.lint_ok {
+    display: none;
+    color: darkgreen;
+}
+
+.lint_warn {
+    display: block;
+    color: red;
+    font-weight: bold;
+}
+
+.lint_notset {
+    display: none;
+}
+
+.lint_caution {
+    display: block;
+    color: orange;
+}
+
+#bm_id_lintbox {
+    margin-left: 20px;
+}
+
+.lint_title {
+    font-weight: bold;
+    display: block;
+    text-decoration: underline;
+}

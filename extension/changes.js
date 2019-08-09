@@ -220,7 +220,6 @@ function makeActions() {
             noteoffset = 0;
         } else {
             noteoffset = 1;
-            //                        idd = idd + 1;
         }
         if (document.getElementById("idSelect" + (i + 2 - noteoffset)).selectedIndex != stepstatus[i]) {
             if (document.getElementById("idSelect" + (i + 2 - noteoffset)).selectedIndex == 2) {
@@ -235,7 +234,6 @@ function makeActions() {
             partial.push(i);
         }
         offset = offset + offset1;
-        //        console.log(offset);
         i = i + offset;
     }
     actionbox = document.getElementById("idFieldAction");
@@ -395,7 +393,7 @@ function buttonInsert(staffno) {
 //    Added a function in here to cope with the A320 family of aircraft.  So we dont have to duplicate the database for the 320 or 321, whenever we detect A32 in idCellAircraftInventory we will return "A320" as the inventory
 //    Added a bandaid in here to return "HAL" for HA aircraft.  This is so that we can have seperate naming conventions for the HALs 
 function aircraftType() {
-    var inventoryRE = new RegExp(/N[0-9]{3}HA/);
+    var inventoryRE = new RegExp(/N\d{3}HA/);
     inventory = document.getElementById("idCellAircraftInventory").childNodes[1].innerHTML;
     inventoryspace = inventory.indexOf(" ");
     inventorydash = inventory.indexOf("-");
@@ -572,7 +570,6 @@ function betterTaskDetails() {
         if (tradecell.innerHTML == "AVIONICS" || tradecell.innerHTML == "ELECT") {
             for (rowloop = 0; rowloop < tradecell.rowSpan; rowloop++) {
                 if (labourrowelements[i].className == "whiteBackground") {
-                    //					labourrowelements[i+rowloop].style.backgroundColor = "#66ff66";
                     labourrowelements[i].className = "avlight";
                 } else {
                     labourrowelements[i].className = "avdark";
@@ -986,6 +983,87 @@ function fixCompleteAll() {
     }
 }
 
+//The folllowing funcitons are all part of the work capture linter
+function docRefPopulated() {
+    var docrefbox = document.getElementById("idFieldDocRef");
+    if (docrefbox.value != '') {
+        return true
+    } else {
+        return false
+    }
+}
+
+function scanDocRef() {
+    var docrefbox = document.getElementById("idFieldDocRef");
+    const regex = /((?<revision>(?:r|rev|revision)\s?\d+)|refer)/gmi;
+    return regex.test(docrefbox.value);
+}
+
+function scanAction() {
+    var actionbox = document.getElementById("idFieldAction");
+    if (actionbox.value == '') {
+        return false
+    } else {
+        return true
+    }
+}
+
+function checkTaskComplete() {
+    var actionbox = document.getElementById("idFieldAction");
+    if (actionbox.value.includes("TASK COMPLETE")) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function buildspan(text, id) {
+    var newspan = document.createElement("span");
+    newspan.innerHTML = text;
+    newspan.id = id;
+    newspan.classList.add("lint_notset");
+    return newspan
+}
+
+function buildLintBox() {
+    var actiontable = document.getElementById("idForm2").nextSibling;
+    var lintdiv = document.createElement("div");
+    lintdiv.id = "bm_id_lintbox";
+    lintdiv.appendChild(buildspan("Work Capture Linter", "bm_id_linttitle"));
+    
+    lintdiv.appendChild(buildspan('Revision not detected in Document Reference Field', "bm_id_revcheck"));
+    lintdiv.appendChild(buildspan('No Action entered', 'bm_id_actioncheck'));
+    if (!isJobStop()) {
+        lintdiv.appendChild(buildspan('Does this need a "Task Complete" Statement?', 'bm_id_taskcompletecheck'));
+    }
+    actiontable.parentElement.appendChild(lintdiv);
+    document.getElementById("bm_id_linttitle").className = "lint_title";
+}
+
+function runLint() {
+    if (docRefPopulated()) {
+        if (scanDocRef()) {
+            document.getElementById("bm_id_revcheck").className = "lint_ok";
+        } else {
+            document.getElementById("bm_id_revcheck").className = "lint_warn";
+        }
+    } else {
+        document.getElementById("bm_id_revcheck").className = "lint_warn";
+    }
+    if (scanAction()) {
+        document.getElementById("bm_id_actioncheck").className = "lint_ok";
+    } else {
+        document.getElementById("bm_id_actioncheck").className = "lint_warn";
+    }
+    if (!isJobStop()) {
+        if (checkTaskComplete()) {
+            document.getElementById("bm_id_taskcompletecheck").className = "lint_ok";
+        } else {
+            document.getElementById("bm_id_taskcompletecheck").className = "lint_caution";
+        }
+    }
+}
+
 //This runs on every page load...  Its job is to determine the page title and the user and then enable the correct enhancements for that page.
 //It also grabs the users staff number.  Its a provision for user settings specific settings in the future.  The idea is a setting is stored on the server and can then follow the user to different computers
 function mainrun() {
@@ -1003,7 +1081,6 @@ function mainrun() {
                    "296015",
                    "989569"];
     usrname = document.getElementsByClassName("username-display")[0].innerHTML;
-    //    document.getElementsByClassName("username-display")[0].innerHTML = usrname + "<b> Enhanced Mode</b>";
     var strwithnumber = document.getElementsByClassName("headerMenuTitle")[0].href;
     var staffnostart = strwithnumber.indexOf("u=");
     var staffno = strwithnumber.substr(staffnostart + 2, 6);
@@ -1015,6 +1092,10 @@ function mainrun() {
         corrActionBox();
         buttonInsert(staffno);
         document.getElementById("idButtonCompleteAll").addEventListener("click", fixCompleteAll);
+        if (staffno == '318955') {
+            buildLintBox();
+            setInterval(runLint, 500);
+        }
     } else if (document.getElementById("idMxTitle").innerHTML == "Raise Fault") {
         betterFaults();
     } else if (document.getElementById("idMxTitle").innerHTML == "Task Details" && betatesters.indexOf(staffno) != -1) {
