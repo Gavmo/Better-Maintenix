@@ -971,6 +971,28 @@ function quickSparkyFilter() {
     location.href = "javascript:onClick_idTabWorkscopeSearchFilterButton(); void 0";
 }
 
+function insertStructuresButton() {
+        newbutton = document.createElement("Button");
+        newbutton.id = "structuresfilter";
+        newbutton.className = "mxlikebutton";
+        codetext = document.createTextNode("Active Structures Tasks");
+        newbutton.appendChild(codetext);
+        document.getElementById("idTableWorkscope_cellSelectDeselect").appendChild(newbutton)
+        newbutton.addEventListener("click", quickStructuresFilter);
+}
+
+//Inserts a button to quickly filter the work package for structures tasks
+function quickStructuresFilter() {
+    var selectbox = document.getElementById("idLabourSkill");
+    document.getElementById("idActiveAndInWork").checked = true;
+    for (var element in selectbox.childNodes) {
+        if (selectbox.childNodes[element].value == "SHMTL" || selectbox.childNodes[element].value == "STRUCT") {
+            selectbox.childNodes[element].selected = true;
+        }
+    }
+    location.href = "javascript:onClick_idTabWorkscopeSearchFilterButton(); void 0";
+}
+
 //Fix the issue where the complete all button seems to lose its click event listener.  This is a band aid as something in the extension itself is breaking the native functionality and I cant narrow down what it is.
 function fixCompleteAll() {
     var stepstable = document.getElementById("idTableSteps");
