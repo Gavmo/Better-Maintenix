@@ -949,49 +949,39 @@ function duplicatePageControls() {
 
 }
 
-function insertSparkyButton() {
+/**
+* Inserts a filter button.  first argument must be the title for the button.  i.e. AVIONICS for "Active Avionics Tasks"
+* Second argument must be a list of Maintenix trade skills to filter by
+* Example: insertFilterButton("Avionics", ["AVIONICS", "ELEC"]);
+*/
+function insertFilterButton() {
+
         newbutton = document.createElement("Button");
-        newbutton.id = "sparkyfilter";
+        newbutton.id = "bm_" + arguments[0] + "filter";
         newbutton.className = "mxlikebutton";
-        codetext = document.createTextNode("Active Sparky Tasks");
+        codetext = document.createTextNode("Active " + arguments[0] + " Tasks");
         newbutton.appendChild(codetext);
-        document.getElementById("idTableWorkscope_cellSelectDeselect").appendChild(newbutton)
-        newbutton.addEventListener("click", quickSparkyFilter);
+        document.getElementById("idTableWorkscope_cellSelectDeselect").appendChild(newbutton);
+        pass_string = arguments[1].toString();
+        newbutton.addEventListener("click", quickTradeFilter.bind(this, pass_string));
 }
 
-//Inserts a button to quickly filter the work package for sparky tasks
-function quickSparkyFilter() {
+/**
+* This function is atteched to the button created in insertFilterButton().  Its job is to set and apply the filter.
+*/
+function quickTradeFilter(tradelist) {
+    trade_array = tradelist.split(",");
     var selectbox = document.getElementById("idLabourSkill");
     document.getElementById("idActiveAndInWork").checked = true;
     for (var element in selectbox.childNodes) {
-        if (selectbox.childNodes[element].value == "AVIONICS" || selectbox.childNodes[element].value == "ELECT") {
+        selectbox.childNodes[element].selected = false;
+        if (trade_array.includes(selectbox.childNodes[element].value)) {
             selectbox.childNodes[element].selected = true;
         }
     }
     location.href = "javascript:onClick_idTabWorkscopeSearchFilterButton(); void 0";
 }
 
-function insertStructuresButton() {
-        newbutton = document.createElement("Button");
-        newbutton.id = "structuresfilter";
-        newbutton.className = "mxlikebutton";
-        codetext = document.createTextNode("Active Structures Tasks");
-        newbutton.appendChild(codetext);
-        document.getElementById("idTableWorkscope_cellSelectDeselect").appendChild(newbutton)
-        newbutton.addEventListener("click", quickStructuresFilter);
-}
-
-//Inserts a button to quickly filter the work package for structures tasks
-function quickStructuresFilter() {
-    var selectbox = document.getElementById("idLabourSkill");
-    document.getElementById("idActiveAndInWork").checked = true;
-    for (var element in selectbox.childNodes) {
-        if (selectbox.childNodes[element].value == "SHMTL" || selectbox.childNodes[element].value == "STRUCT") {
-            selectbox.childNodes[element].selected = true;
-        }
-    }
-    location.href = "javascript:onClick_idTabWorkscopeSearchFilterButton(); void 0";
-}
 
 //Fix the issue where the complete all button seems to lose its click event listener.  This is a band aid as something in the extension itself is breaking the native functionality and I cant narrow down what it is.
 function fixCompleteAll() {
@@ -1115,10 +1105,8 @@ function mainrun() {
         corrActionBox();
         buttonInsert(staffno);
         document.getElementById("idButtonCompleteAll").addEventListener("click", fixCompleteAll);
-        if (staffno == '318955') {
-            buildLintBox();
-            setInterval(runLint, 500);
-        }
+        buildLintBox();
+        setInterval(runLint, 500);
     } else if (document.getElementById("idMxTitle").innerHTML == "Raise Fault") {
         betterFaults();
     } else if (document.getElementById("idMxTitle").innerHTML == "Task Details" && betatesters.indexOf(staffno) != -1) {
@@ -1135,8 +1123,8 @@ function mainrun() {
         if (document.getElementById("idTableWorkscope_pageCount") != null){
         duplicatePageControls();
         }
-        insertSparkyButton()
-
+        insertFilterButton("Avionics", ["AVIONICS", "ELECT"]);
+        insertFilterButton("Structures", ["SHMTL", "STRUCT"]);
     }
 }
 

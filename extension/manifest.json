@@ -15,7 +15,13 @@
     
   "content_scripts": [
     {
-      "matches": ["https://qaccess.qantas.com.au/*", "*://maintenix.qantas.com.au/*", "*://mx-psup/*", "*://mx-pstg/*"],
+      "matches": ["*://maintenix.qantas.com.au/*", 
+                  "*://mx-psup/*", 
+                  "*://mx-pstg/*",
+                  "*://mx-psup.qantas.com.au/*",
+                  "*://mx-pstg.qantas.com.au/*",
+                  "*://mx-uat.qcpaws.qantas.com.au/*"                 
+                 ],
       "js": ["changes.js"],
       "css": ["customstyle.css"]
     }
