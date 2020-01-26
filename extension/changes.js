@@ -4,10 +4,10 @@ function getStoredFaults(area, trade, assembly) {
     document.getElementById("bm_subsubzoneselect").style.display = "none";
     document.getElementById("bm_subzoneselect").length = 0;
     document.getElementById("bm_subsubzoneselect").length = 0;
-    if (assembly != 'A330'){
-        getZones(area, assembly);    
+    if (assembly != 'A330') {
+        getZones(area, assembly);
     }
-    
+
 
 }
 
@@ -912,25 +912,25 @@ function duplicatePageControls() {
 }
 
 /**
-* Inserts a filter button.  first argument must be the title for the button.  i.e. AVIONICS for "Active Avionics Tasks"
-* Second argument must be a list of Maintenix trade skills to filter by
-* Example: insertFilterButton("Avionics", ["AVIONICS", "ELEC"]);
-*/
+ * Inserts a filter button.  first argument must be the title for the button.  i.e. AVIONICS for "Active Avionics Tasks"
+ * Second argument must be a list of Maintenix trade skills to filter by
+ * Example: insertFilterButton("Avionics", ["AVIONICS", "ELEC"]);
+ */
 function insertFilterButton() {
 
-        newbutton = document.createElement("Button");
-        newbutton.id = "bm_" + arguments[0] + "filter";
-        newbutton.className = "mxlikebutton";
-        codetext = document.createTextNode("Active " + arguments[0] + " Tasks");
-        newbutton.appendChild(codetext);
-        document.getElementById("idTableWorkscope_cellSelectDeselect").appendChild(newbutton);
-        pass_string = arguments[1].toString();
-        newbutton.addEventListener("click", quickTradeFilter.bind(this, pass_string));
+    newbutton = document.createElement("Button");
+    newbutton.id = "bm_" + arguments[0] + "filter";
+    newbutton.className = "mxlikebutton";
+    codetext = document.createTextNode("Active " + arguments[0] + " Tasks");
+    newbutton.appendChild(codetext);
+    document.getElementById("idTableWorkscope_cellSelectDeselect").appendChild(newbutton);
+    pass_string = arguments[1].toString();
+    newbutton.addEventListener("click", quickTradeFilter.bind(this, pass_string));
 }
 
 /**
-* This function is atteched to the button created in insertFilterButton().  Its job is to set and apply the filter.
-*/
+ * This function is atteched to the button created in insertFilterButton().  Its job is to set and apply the filter.
+ */
 function quickTradeFilter(tradelist) {
     trade_array = tradelist.split(",");
     var selectbox = document.getElementById("idLabourSkill");
@@ -949,7 +949,7 @@ function quickTradeFilter(tradelist) {
 function fixCompleteAll() {
     var stepstable = document.getElementById("idTableSteps");
     var stepsselects = stepstable.getElementsByTagName("select");
-    for (var selector =0; selector < stepsselects.length; selector++) {
+    for (var selector = 0; selector < stepsselects.length; selector++) {
         var stepoptions = stepsselects[selector].selectedIndex;
         if (stepoptions == 0 || stepoptions == 1) {
             stepsselects[selector].selectedIndex = 2;
@@ -1004,7 +1004,7 @@ function buildLintBox() {
     var lintdiv = document.createElement("div");
     lintdiv.id = "bm_id_lintbox";
     lintdiv.appendChild(buildspan("Work Capture Linter", "bm_id_linttitle"));
-    
+
     lintdiv.appendChild(buildspan('Revision not detected in Document Reference Field', "bm_id_revcheck"));
     lintdiv.appendChild(buildspan('No Action entered', 'bm_id_actioncheck'));
     if (!isJobStop()) {
@@ -1041,15 +1041,15 @@ function runLint() {
 //This runs on every page load...  Its job is to determine the page title and the user and then enable the correct enhancements for that page.
 //It also grabs the users staff number.  Its a provision for user settings specific settings in the future.  The idea is a setting is stored on the server and can then follow the user to different computers
 function mainrun() {
-    betatesters = ["318955", 
-                   "250384", 
-                   "346915", 
-                   "301086", 
-                   "139134", 
-                   "119765", 
-                   "325191", 
-                   "319637", 
-                   "561826", 
+    betatesters = ["318955",
+                   "250384",
+                   "346915",
+                   "301086",
+                   "139134",
+                   "119765",
+                   "325191",
+                   "319637",
+                   "561826",
                    "318953",
                    "108071",
                    "296015",
@@ -1080,9 +1080,9 @@ function mainrun() {
         quickJobButtons();
     } else if (document.getElementById("idMxTitle").innerHTML == "Add Step" && isTaskDefn() == true) {
         addStepEnhancement();
-    } else if (document.getElementById("idMxTitle").innerHTML == "Work Package Details")  {
-        if (document.getElementById("idTableWorkscope_pageCount") != null){
-        duplicatePageControls();
+    } else if (document.getElementById("idMxTitle").innerHTML == "Work Package Details") {
+        if (document.getElementById("idTableWorkscope_pageCount") != null) {
+            duplicatePageControls();
         }
         insertFilterButton("Avionics", ["AVIONICS", "ELECT"]);
         insertFilterButton("Structures", ["SHMTL", "STRUCT"]);
