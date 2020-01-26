@@ -303,44 +303,11 @@ function isJobStop() {
 
 }
 
-function makeClassicView() {
-    document.getElementById("idButtonClassicMode").style.display = "None";
-    steplist = document.getElementById("idTableSteps").children[0]
-    numsteps = steplist.children.length;
-    new_td = document.createElement("TD");
-    new_td.id = "idNotes_bme";
-    tbodyelement.children[0].appendChild(new_td);
-    document.getElementById("idNotes_bme").innerHTML = "Notes";
-    tbodyelement.children[0].getElementsByTagName("td")[1].style.width = "auto";
-    for (i = 0; i < numsteps - 1; i++) {
-        try {
-            notebox = tbodyelement.children[i + 1].getElementsByTagName("td")[1].getElementsByTagName("textarea")[0];
-            tbodyelement.children[i + 1].getElementsByTagName("td")[1].style.width = "auto";
-            notebox.setAttribute("cols", "90");
-            new_td = document.createElement("TD");
-            new_td.id = "idNoteBox_" + i.toString() + "_bme";
-            new_td.appendChild(notebox);
-            if (tbodyelement.children[i + 1].children[0].getAttribute("rowspan") != null) {
-                var rowoffset = parseInt(tbodyelement.children[i + 1].children[0].getAttribute("rowspan"));
-                new_td.setAttribute("rowspan", rowoffset);
-                new_td.style.verticalAlign = "bottom";
-            }
-            tbodyelement.children[i + 1].appendChild(new_td);
-        } catch (oops) {
-            continue
-        }
-    }
-}
 
 function buttonInsert(staffno) {
     //This should be changed to a function to create buttons.  This way is garbage.
     genactionbutton = "<a id=\"idButtonGenerateAction\" title=\"Generate Action\" class=\"largeButton\" style=\"\"><span class=\"largeButtonTextCell\">Generate Action</span></a>";
     taskComplete = "<a id=\"idButtonTaskComplete\" title=\"Task Complete\" class=\"largeButton\" style=\"\"><span class=\"largeButtonTextCell\">Task Complete</span></a>";
-    if (classicmodeuser.indexOf(staffno) != -1) {
-        classicMode = "<a id=\"idButtonClassicMode\" title=\"Classic Mode\" class=\"largeButton\" style=\"\"><span class=\"largeButtonTextCell\">Classic View</span></a>";
-    } else {
-        classicMode = ""
-    }
     stepsarea = document.getElementById("idContentRow_idGrpJicSteps");
     childs = stepsarea.children[0];
     for (i = 0; i < 8; i++) {
@@ -354,11 +321,6 @@ function buttonInsert(staffno) {
     document.getElementById("idButtonTaskComplete").addEventListener("click", function () {
         taskCompleteWords()
     });
-    if (classicmodeuser.indexOf(staffno) != -1) {
-        document.getElementById("idButtonClassicMode").addEventListener("click", function () {
-            makeClassicView()
-        });
-    }
     steplist = document.getElementById("idTableSteps").children[0];
     numsteps = steplist.children.length;
     offset = 0;
@@ -1116,7 +1078,6 @@ function mainrun() {
         //        findBarcodes();
     } else if (document.getElementById("idMxTitle").innerHTML == "Add Non Maintenix Task Labour Booking") {
         quickJobButtons();
-
     } else if (document.getElementById("idMxTitle").innerHTML == "Add Step" && isTaskDefn() == true) {
         addStepEnhancement();
     } else if (document.getElementById("idMxTitle").innerHTML == "Work Package Details")  {
@@ -1145,11 +1106,6 @@ var jobcodes = {
 }
 
 
-var classicmodeuser = ["318955",
-                       "124851",
-                       "127387",
-                       "128980"
-                      ];
 //For the Add Step Enhancement.
 var markups = {
     "Embolden": "b",
