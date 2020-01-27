@@ -285,6 +285,14 @@ function jobStepWarning(itemid) {
     }
 }
 
+/**
+ * Expand the Doc reference field on Work capture to the size passed to the function.  -
+ */
+function expandDocRef(size) {
+    document.getElementById("idFieldDocRef").setAttribute("size", size);
+}
+
+
 function taskCompleteWords() {
     actionbox = document.getElementById("idFieldAction");
     actionboxtext = actionbox.value;
@@ -314,7 +322,7 @@ function buttonInsert(staffno) {
         childs = childs.children[0];
     }
     a = childs.innerHTML;
-    childs.innerHTML = a + genactionbutton + taskComplete + classicMode;
+    childs.innerHTML = a + genactionbutton + taskComplete;
     document.getElementById("idButtonGenerateAction").addEventListener("click", function () {
         makeActions()
     });
@@ -1065,6 +1073,7 @@ function mainrun() {
     //    }
     if (document.getElementById("idMxTitle").innerHTML == "Work Capture") {
         corrActionBox();
+        expandDocRef(150);
         buttonInsert(staffno);
         document.getElementById("idButtonCompleteAll").addEventListener("click", fixCompleteAll);
         buildLintBox();
