@@ -977,7 +977,7 @@ function docRefPopulated() {
 
 function scanDocRef() {
     var docrefbox = document.getElementById("idFieldDocRef");
-    const regex = /((?<revision>(?:r|rev|revision)\s?\d+)|refer)/gmi;
+    const regex = /((?<revision>(?:r|rev|revision)\.?\s?\d+)|refer)\.?/gmi;
     return regex.test(docrefbox.value);
 }
 
@@ -1073,7 +1073,7 @@ function mainrun() {
     //    }
     if (document.getElementById("idMxTitle").innerHTML == "Work Capture") {
         corrActionBox();
-        expandDocRef(150);
+        expandDocRef(158);
         buttonInsert(staffno);
         document.getElementById("idButtonCompleteAll").addEventListener("click", fixCompleteAll);
         buildLintBox();
