@@ -5,7 +5,7 @@
 
   "name": "Better Maintenix",
   "description": "Adds Extra functions to Maintenix",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "options_page": "options.html",
   "background": {
   },
@@ -20,7 +20,8 @@
                   "*://mx-pstg/*",
                   "*://mx-psup.qantas.com.au/*",
                   "*://mx-pstg.qantas.com.au/*",
-                  "*://mx-uat.qcpaws.qantas.com.au/*"                 
+                  "*://mx-uat.qcpaws.qantas.com.au/*",
+                  "*://qaccess.qantas.com.au/*"
                  ],
       "js": ["changes.js"],
       "css": ["customstyle.css"]

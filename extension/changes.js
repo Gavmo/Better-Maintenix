@@ -1046,18 +1046,27 @@ function runLint() {
     }
 }
 
+function addGoButton() {
+    //Mark Rowans button
+    var gobutton = document.createElement("button");
+    gobutton.setAttribute("type", "submit");
+    gobutton.innerHTML = "GO";
+    document.getElementById("idHeaderSearchWrap").childNodes[1].appendChild(gobutton);
+}
+
 //This runs on every page load...  Its job is to determine the page title and the user and then enable the correct enhancements for that page.
 //It also grabs the users staff number.  Its a provision for user settings specific settings in the future.  The idea is a setting is stored on the server and can then follow the user to different computers
 function mainrun() {
-    betatesters = ["318955",
-                   "250384",
-                   "346915",
-                   "301086",
-                   "139134",
-                   "119765",
-                   "325191",
-                   "319637",
-                   "561826",
+    addGoButton();
+    betatesters = ["318955", 
+                   "250384", 
+                   "346915", 
+                   "301086", 
+                   "139134", 
+                   "119765", 
+                   "325191", 
+                   "319637", 
+                   "561826", 
                    "318953",
                    "108071",
                    "296015",
