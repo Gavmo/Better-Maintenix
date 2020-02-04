@@ -5,8 +5,7 @@
 
   "name": "Better Maintenix",
   "description": "Adds Extra functions to Maintenix",
-  "version": "1.5.0",
-  "options_page": "options.html",
+  "version": "1.5.1",
   "background": {
   },
  "icons": { 
@@ -29,9 +28,7 @@
   ],
 
   "permissions": [
-   "activeTab", 
-   "tabs",
-   "cookies"
+   "activeTab"
    ],
       "web_accessible_resources": [
     "names.json"
