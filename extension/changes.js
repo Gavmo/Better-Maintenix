@@ -405,9 +405,9 @@ function quickJobButtons() {
 
 function betterFaults() {
     //    Defines the areas, trades and categories.  Pretty static.  Move it to a config file one day
-    arealist = ["CAB", "LWE", "RWE", "MOR", "BAG", "EMP", "FUS", "IFE"];
-    tradelist = ["AF", "AV", "SM", "ND", "FGAC", "FGBS", "PT", "UT", "FT", "FU"];
-    catlist = ["*** GREEN ***", "*** AMBER ***", "*** RED ***", "*** ERES ***", "*** AWR ***", "*** EGR ***"]
+    arealist = ["CAB", "LWE", "RWE", "MOR", "BAG", "EMP", "FUS"];
+    tradelist = ["AF", "AV", "SM", "ND", "FG", "FGBS", "PT", "UT", "FT", "FU"];
+    catlist = ["*** ERES ***", "*** AWR ***", "*** EGR ***","*** TSR ***", "*** RECALL ***"]
     regotable = document.getElementById("idTableFaultRegistration");
     parenttask = document.getElementById("idCellFoundDuringTask").childNodes[1].innerHTML;
     parenttaskspace = parenttask.indexOf(" ");
