@@ -407,7 +407,7 @@ function betterFaults() {
     //    Defines the areas, trades and categories.  Pretty static.  Move it to a config file one day
     arealist = ["CAB", "LWE", "RWE", "MOR", "BAG", "EMP", "FUS"];
     tradelist = ["AF", "AV", "SM", "ND", "FG", "FGBS", "PT", "UT", "FT", "FU"];
-    catlist = ["*** ERES ***", "*** AWR ***", "*** EGR ***", "*** TSR ***", "*** RECALL ***"]
+    catlist = ["*** TSR ***", "*** AWR ***", "*** EGR ***", "*** ERES ***", "*** RECALL ***"]
     regotable = document.getElementById("idTableFaultRegistration");
     parenttask = document.getElementById("idCellFoundDuringTask").childNodes[1].innerHTML;
     parenttaskspace = parenttask.indexOf(" ");
@@ -485,7 +485,7 @@ function betterFaults() {
     }
 
     if (document.getElementById("idCellFaultName").value == '') {
-        document.getElementById("idCellFaultName").value = "CAB AF *** GREEN *** ";
+        document.getElementById("idCellFaultName").value = "CAB AF *** TSR *** ";
         document.getElementById("idSelect9").value = "MECH";
         getStoredFaults("CAB", "AF", aircraftType());
 
